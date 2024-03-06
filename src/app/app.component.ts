@@ -10,6 +10,11 @@ type Employee = {
   MonthlyHours: number;
 };
 
+export type EmployeesPercentages = {
+  EmployeeName: string | null;
+  Percentage: number;
+};
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,6 +23,7 @@ type Employee = {
 export class AppComponent implements OnInit {
   employees: Employee[] = [];
   groupedEmployees: Map<string, Employee> = new Map();
+  employeesAndPercentages: EmployeesPercentages[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -30,6 +36,8 @@ export class AppComponent implements OnInit {
       .subscribe({
         next: (employees) => {
           this.employees = employees;
+          this.employeesAndPercentages =
+            this.CalculateEmployeesPercentagesByHoursWorked(this.employees);
         },
       });
   }
@@ -77,5 +85,18 @@ export class AppComponent implements OnInit {
     } else {
       this.groupedEmployees.set(name, { ...employee });
     }
+  }
+
+  private CalculateEmployeesPercentagesByHoursWorked(
+    employees: Employee[]
+  ): EmployeesPercentages[] {
+    const totalHours = employees.reduce(
+      (acc, cur) => acc + cur.MonthlyHours,
+      0
+    );
+    return employees.map((employee) => ({
+      EmployeeName: employee.EmployeeName,
+      Percentage: +((employee.MonthlyHours / totalHours) * 100).toFixed(2),
+    }));
   }
 }

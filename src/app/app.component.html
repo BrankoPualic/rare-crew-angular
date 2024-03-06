@@ -17,4 +17,9 @@
       }
     </tbody>
   </table>
+  @if (employeesAndPercentages.length) {
+  <div class="chart">
+    <app-pie-chart [employeesData]="employeesAndPercentages" />
+  </div>
+  }
 </div>

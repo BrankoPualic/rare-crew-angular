@@ -33,3 +33,7 @@ thead {
 table tr :is(th, td):nth-child(1) {
   text-align: start;
 }
+
+.chart {
+  width: 600px;
+}
