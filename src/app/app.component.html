@@ -1,0 +1,20 @@
+<div class="container">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Total Time in Month</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (employee of employees; track employee.EmployeeName) {
+      <tr [ngClass]="{ lessThanHunderdHours: employee.MonthlyHours < 100 }">
+        <td>{{ employee.EmployeeName }}</td>
+        <td>{{ employee.MonthlyHours }} hrs</td>
+        <td class="action">Edit</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
